@@ -139,7 +139,10 @@ async def server_reload():
                         try:
                             gambar.save(buffer, format='JPEG')
                         except Exception as e:
-                            print(e)
+                            print(f"{getTime()} -> Exception ditemukan: {e}")
+                            if e == "cannot write mode RGBA as JPEG":
+                                gambar.save(buffer, format='RGBA')
+                                print(f"{getTime()} -> Execption RGBA berhasil di atasi")
 
                         buffer.seek(0)
                         embed.set_thumbnail(url="attachment://thumbnail.png")
