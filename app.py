@@ -134,7 +134,13 @@ async def server_reload():
                         gambar = Image.open(image)
 
                         buffer = BytesIO()
-                        gambar.save(buffer, format='JPEG')
+                        
+                        # except type 
+                        try:
+                            gambar.save(buffer, format='JPEG')
+                        except Exception as e:
+                            print(e)
+
                         buffer.seek(0)
                         embed.set_thumbnail(url="attachment://thumbnail.png")
 
