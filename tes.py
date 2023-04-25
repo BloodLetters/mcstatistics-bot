@@ -1,4 +1,13 @@
-import requests
+from mcstatus import JavaServer, dns
 
-url = "https://api.ipify.org?format=json"
-print(requests.get(url).text)
+def resolve(ip, port):
+    try:
+        data = dns.resolve_mc_srv(ip)
+        return data[0], str(data[1])
+    except:
+        return ip, port
+
+datas = resolve("doskapmc.net", "25565")
+server = JavaServer.lookup(datas[0] + ":" + datas[1])
+status = server.status()
+print("Total online: " + str(status.players.online))

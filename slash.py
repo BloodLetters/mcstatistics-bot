@@ -73,7 +73,7 @@ class command(commands.Cog):
                                 await interaction.response.send_message(embed=embed, file=file)
                                 embed_id = await interaction.original_response()
                                 database().insertData(interaction.guild.id, interaction.channel.id, embed_id.id, address, port, type.value)
-                            except:
+                            except Exception as e:
                                 await interaction.response.send_message("Please try again", ephemeral=True)
                         else:
                             file = discord.File("bedrock.png", filename='bedrock.png')
@@ -83,7 +83,7 @@ class command(commands.Cog):
                                 await interaction.response.send_message(embed=embed, file=file)
                                 embed_id = await interaction.original_response()
                                 database().insertData(interaction.guild.id, interaction.channel.id, embed_id.id, address, port, type.value)
-                            except:
+                            except Exception as e:
                                 await interaction.response.send_message("Please try again", ephemeral=True)
         else:
             await interaction.response.send_message("Only admin can execute this comment", ephemeral=True)
@@ -135,13 +135,13 @@ class command(commands.Cog):
     async def ping(self, interaction: discord.Interaction, address: str, port: str, type: app_commands.Choice[str]):
         try:
             datas = request(address, type.value, port)
-            if datas[0] == 0 and datas[1] == 0:
+            if datas[2] == "offline":
                 embed = discord.Embed(title=f"{address}", description="``Server Offline``", color=0xff1515)
                 embed.timestamp = utcnow()
                 await interaction.response.send_message(embed=embed)
             else:
                 list_player = ""
-                list_index= 0
+                list_index = 0
                 if datas[5][0].lower() == "not avaible":
                     list_player = "Not Avaible"
                 else:
@@ -165,7 +165,7 @@ class command(commands.Cog):
                     file = discord.File("bedrock.png", filename='bedrock.png')
                     embed.set_thumbnail(url="attachment://bedrock.png")
                     await interaction.response.send_message(embed=embed, file=file)
-        except:
+        except Exception as e:
             await interaction.response.send_message("Please try again")
 
     @app_commands.command(name="help", description="Return help command")
@@ -300,3 +300,4 @@ def base64_to_png(base64_text):
 
 async def setup(bot):
     await bot.add_cog(command(bot))
+
