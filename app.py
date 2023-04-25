@@ -48,7 +48,11 @@ async def on_ready():
         bot.loop.create_task(server_reload())
     
     if use_backup == True:
-        bot.loop.create_task(backup())
+        if full_backup == True:
+            bot.loop.create_task(backup_db())
+            bot.loop.create_task(backup())
+        else:
+            bot.loop.create_task(backup_db())
     #await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="/help"))
 
 @bot.event
@@ -190,6 +194,13 @@ async def backup():
             pass
         await asyncio.sleep(backup_time)
 
+async def backup_db():
+    while True:
+        file = f'./database/data.db'
+        channel = bot.get_channel(1095669231166705704)
+        await channel.send(file=discord.File(file))
+        await asyncio.sleep(backup_time)
+    
 def base64_to_png(base64_text):
     if 'data:image/png;base64,' in base64_text:
         base64_text = base64_text.replace('data:image/png;base64,', '')

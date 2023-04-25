@@ -10,8 +10,9 @@ api_version = "1.2 Release"
 
 initial_cogs = ['slash']
 
-use_backup = False
-backup_time = jam_ke_detik(12, 0, 0) # format(jam, menit, detik)
+use_backup = True
+full_backup = False
+backup_time = jam_ke_detik(6, 0, 0) # format(jam, menit, detik)
 
 update_embed = True
-embed_reload_time = 60 # detik
+embed_reload_time = 600 # detik
