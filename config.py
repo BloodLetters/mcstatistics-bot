@@ -11,7 +11,7 @@ api_version = "1.2 Release"
 initial_cogs = ['slash']
 
 use_backup = True
-full_backup = False
+full_backup = False # False = backup database aja, True = backup semua file + database
 backup_time = jam_ke_detik(6, 0, 0) # format(jam, menit, detik)
 
 update_embed = True
