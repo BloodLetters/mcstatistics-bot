@@ -141,7 +141,8 @@ async def server_reload():
                         except Exception as e:
                             print(f"{getTime()} -> Exception ditemukan: {e}")
                             if e == "cannot write mode RGBA as JPEG":
-                                gambar.save(buffer, format='RGBA')
+                                gambar.convert('RGB')
+                                gambar.save(buffer, format='JPEG')
                                 print(f"{getTime()} -> Execption RGBA berhasil di atasi")
 
                         buffer.seek(0)
